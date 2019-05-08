@@ -10,10 +10,10 @@ declare var blockstack;
 // declare var Caman;
 
 @Component({
-  tag: 'app-photo',
-  styleUrl: 'app-photo.css'
+  tag: 'app-song',
+  styleUrl: 'app-song.css'
 })
-export class AppPhoto {
+export class AppSong {
   private present: PresentingService;
   private modalController: HTMLIonModalControllerElement;
   private slides: HTMLIonSlidesElement;

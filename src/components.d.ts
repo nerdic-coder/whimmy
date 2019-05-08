@@ -36,28 +36,8 @@ export namespace Components {
     'selectedPhotos'?: any[];
   }
 
-  interface AppAlbums {}
-  interface AppAlbumsAttributes extends StencilHTMLAttributes {}
-
-  interface AppPhoto {
-    'albumId': string;
-    'photoId': string;
-    'updateCallback': any;
-  }
-  interface AppPhotoAttributes extends StencilHTMLAttributes {
-    'albumId'?: string;
-    'photoId'?: string;
-    'updateCallback'?: any;
-  }
-
-  interface AppPhotos {
-    'albumId': string;
-    'photoId': string;
-  }
-  interface AppPhotosAttributes extends StencilHTMLAttributes {
-    'albumId'?: string;
-    'photoId'?: string;
-  }
+  interface AppPlaylists {}
+  interface AppPlaylistsAttributes extends StencilHTMLAttributes {}
 
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
@@ -67,29 +47,49 @@ export namespace Components {
 
   interface AppSignin {}
   interface AppSigninAttributes extends StencilHTMLAttributes {}
+
+  interface AppSong {
+    'albumId': string;
+    'photoId': string;
+    'updateCallback': any;
+  }
+  interface AppSongAttributes extends StencilHTMLAttributes {
+    'albumId'?: string;
+    'photoId'?: string;
+    'updateCallback'?: any;
+  }
+
+  interface AppSongs {
+    'photoId': string;
+    'playlistId': string;
+  }
+  interface AppSongsAttributes extends StencilHTMLAttributes {
+    'photoId'?: string;
+    'playlistId'?: string;
+  }
 }
 
 declare global {
   interface StencilElementInterfaces {
     'BlockImg': Components.BlockImg;
     'SelectAlbum': Components.SelectAlbum;
-    'AppAlbums': Components.AppAlbums;
-    'AppPhoto': Components.AppPhoto;
-    'AppPhotos': Components.AppPhotos;
+    'AppPlaylists': Components.AppPlaylists;
     'AppRoot': Components.AppRoot;
     'AppSettings': Components.AppSettings;
     'AppSignin': Components.AppSignin;
+    'AppSong': Components.AppSong;
+    'AppSongs': Components.AppSongs;
   }
 
   interface StencilIntrinsicElements {
     'block-img': Components.BlockImgAttributes;
     'select-album': Components.SelectAlbumAttributes;
-    'app-albums': Components.AppAlbumsAttributes;
-    'app-photo': Components.AppPhotoAttributes;
-    'app-photos': Components.AppPhotosAttributes;
+    'app-playlists': Components.AppPlaylistsAttributes;
     'app-root': Components.AppRootAttributes;
     'app-settings': Components.AppSettingsAttributes;
     'app-signin': Components.AppSigninAttributes;
+    'app-song': Components.AppSongAttributes;
+    'app-songs': Components.AppSongsAttributes;
   }
 
 
@@ -105,22 +105,10 @@ declare global {
     new (): HTMLSelectAlbumElement;
   };
 
-  interface HTMLAppAlbumsElement extends Components.AppAlbums, HTMLStencilElement {}
-  var HTMLAppAlbumsElement: {
-    prototype: HTMLAppAlbumsElement;
-    new (): HTMLAppAlbumsElement;
-  };
-
-  interface HTMLAppPhotoElement extends Components.AppPhoto, HTMLStencilElement {}
-  var HTMLAppPhotoElement: {
-    prototype: HTMLAppPhotoElement;
-    new (): HTMLAppPhotoElement;
-  };
-
-  interface HTMLAppPhotosElement extends Components.AppPhotos, HTMLStencilElement {}
-  var HTMLAppPhotosElement: {
-    prototype: HTMLAppPhotosElement;
-    new (): HTMLAppPhotosElement;
+  interface HTMLAppPlaylistsElement extends Components.AppPlaylists, HTMLStencilElement {}
+  var HTMLAppPlaylistsElement: {
+    prototype: HTMLAppPlaylistsElement;
+    new (): HTMLAppPlaylistsElement;
   };
 
   interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
@@ -141,26 +129,38 @@ declare global {
     new (): HTMLAppSigninElement;
   };
 
+  interface HTMLAppSongElement extends Components.AppSong, HTMLStencilElement {}
+  var HTMLAppSongElement: {
+    prototype: HTMLAppSongElement;
+    new (): HTMLAppSongElement;
+  };
+
+  interface HTMLAppSongsElement extends Components.AppSongs, HTMLStencilElement {}
+  var HTMLAppSongsElement: {
+    prototype: HTMLAppSongsElement;
+    new (): HTMLAppSongsElement;
+  };
+
   interface HTMLElementTagNameMap {
     'block-img': HTMLBlockImgElement
     'select-album': HTMLSelectAlbumElement
-    'app-albums': HTMLAppAlbumsElement
-    'app-photo': HTMLAppPhotoElement
-    'app-photos': HTMLAppPhotosElement
+    'app-playlists': HTMLAppPlaylistsElement
     'app-root': HTMLAppRootElement
     'app-settings': HTMLAppSettingsElement
     'app-signin': HTMLAppSigninElement
+    'app-song': HTMLAppSongElement
+    'app-songs': HTMLAppSongsElement
   }
 
   interface ElementTagNameMap {
     'block-img': HTMLBlockImgElement;
     'select-album': HTMLSelectAlbumElement;
-    'app-albums': HTMLAppAlbumsElement;
-    'app-photo': HTMLAppPhotoElement;
-    'app-photos': HTMLAppPhotosElement;
+    'app-playlists': HTMLAppPlaylistsElement;
     'app-root': HTMLAppRootElement;
     'app-settings': HTMLAppSettingsElement;
     'app-signin': HTMLAppSigninElement;
+    'app-song': HTMLAppSongElement;
+    'app-songs': HTMLAppSongsElement;
   }
 
 

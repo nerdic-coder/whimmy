@@ -7,9 +7,9 @@ import PresentingService from '../../services/presenting-service';
 declare var blockstack;
 
 @Component({
-  tag: 'app-albums'
+  tag: 'app-playlists'
 })
-export class AppAlbums {
+export class AppPlaylists {
   private present: PresentingService;
   private refresherScroll: any;
 
@@ -39,7 +39,7 @@ export class AppAlbums {
 
     this.loadAlbums(false);
 
-    AnalyticsService.logEvent('photos-list');
+    AnalyticsService.logEvent('playlists');
   }
 
   refreshList() {
@@ -210,7 +210,7 @@ export class AppAlbums {
     if (!this.editMode) {
       const router = document.querySelector('ion-router');
       await router.componentOnReady();
-      router.push('/album/' + albumId, 'forward');
+      router.push('/playlist/' + albumId, 'forward');
     }
   }
 

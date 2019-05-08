@@ -10,10 +10,10 @@ import { PhotoType } from '../../models/photo-type';
 declare var blockstack;
 
 @Component({
-  tag: 'app-photos',
-  styleUrl: 'app-photos.css'
+  tag: 'app-songs',
+  styleUrl: 'app-songs.css'
 })
-export class AppPhotos {
+export class AppSongs {
   private timer;
   private lockTimer;
   private touchduration = 800;
@@ -26,7 +26,7 @@ export class AppPhotos {
   private refresherScroll: any;
   private photosListCached: any[] = [];
   private modalController: HTMLIonModalControllerElement;
-  private appPhotoElement: HTMLAppPhotoElement;
+  private appSongElement: HTMLAppSongElement;
   private album: any;
   private router: HTMLIonRouterElement;
 
@@ -37,7 +37,7 @@ export class AppPhotos {
   @State() checkedItems: any[] = [];
 
   @Prop({ mutable: true }) photoId: string;
-  @Prop({ mutable: true }) albumId: string;
+  @Prop({ mutable: true }) playlistId: string;
 
   constructor() {
     this.present = new PresentingService();
@@ -47,12 +47,12 @@ export class AppPhotos {
   async componentWillLoad() {
     this.uploadService = new UploadService(
       this.uploadFilesDoneCallback.bind(this),
-      this.albumId
+      this.playlistId
     );
 
-    if (this.albumId) {
+    if (this.playlistId) {
       // Load album list
-      this.album = await AlbumsService.getAlbumMetaData(this.albumId);
+      this.album = await AlbumsService.getAlbumMetaData(this.playlistId);
     }
   }
 
@@ -98,7 +98,7 @@ export class AppPhotos {
 
   ionRouteDidChange(event: any) {
     if (event && event.detail && event.detail.to === '/photos') {
-      this.albumId = null;
+      this.playlistId = null;
       this.album = null;
       this.refreshPhotosList();
     }
@@ -117,7 +117,7 @@ export class AppPhotos {
       // Get the contents of the file picture-list.json
       const photosListResponse = await PhotosService.getPhotosList(
         sync,
-        this.albumId
+        this.playlistId
       );
       this.photosListCached = photosListResponse.photosList;
       if (!skipLoading) {
@@ -261,17 +261,17 @@ export class AppPhotos {
   }
 
   async openPhotoModal(photoId: string) {
-    if (this.appPhotoElement) {
-      this.appPhotoElement.remove();
+    if (this.appSongElement) {
+      this.appSongElement.remove();
     }
     // create component to open
-    this.appPhotoElement = document.createElement('app-photo');
+    this.appSongElement = document.createElement('app-song');
 
     const modal = await this.modalController.create({
-      component: this.appPhotoElement,
+      component: this.appSongElement,
       componentProps: {
         photoId,
-        albumId: this.albumId,
+        albumId: this.playlistId,
         updateCallback: this.updateCallback.bind(this)
       },
       cssClass: 'router-modal'
@@ -342,7 +342,7 @@ export class AppPhotos {
         <ion-toolbar mode="md" color="primary">
           {this.album && !this.editMode ? (
             <ion-buttons slot="start">
-              <ion-back-button defaultHref="/albums" />
+              <ion-back-button defaultHref="/playlists" />
             </ion-buttons>
           ) : null}
           {this.editMode ? (
@@ -381,7 +381,7 @@ export class AppPhotos {
                       this.present.deletePhotos(
                         this.checkedItems,
                         this.deletePhotoCallback.bind(this),
-                        this.albumId
+                        this.playlistId
                       )
                     }
                   >

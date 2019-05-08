@@ -43,14 +43,14 @@ export class AppRoot {
     try {
       if (await SettingsService.getAnalyticsSetting(true)) {
         Sentry.init({
-          dsn: 'https://2b0b525209b646f49e438cff86c3e117@sentry.io/1331915',
-          release: 'whimmy@3.0'
+          dsn: 'https://97a0785ab6c7430a8e989b8e1074241d@sentry.io/1455517',
+          release: 'whimmy@1.0'
         });
       }
     } catch (error) {
       Sentry.init({
-        dsn: 'https://2b0b525209b646f49e438cff86c3e117@sentry.io/1331915',
-        release: 'whimmy@3.0'
+        dsn: 'https://97a0785ab6c7430a8e989b8e1074241d@sentry.io/1455517',
+        release: 'whimmy@1.0'
       });
     }
 
@@ -105,10 +105,10 @@ export class AppRoot {
         <ion-router useHash={true}>
           <ion-route url="/" component="app-signin" />
           <ion-route url="/settings/" component="app-settings" />
-          <ion-route url="/photos/" component="app-photos" />
-          <ion-route url="/album/:albumId" component="app-photos" />
-          <ion-route url="/photo/:photoId" component="app-photo" />
-          <ion-route url="/albums/" component="app-albums" />
+          <ion-route url="/songs/" component="app-songs" />
+          <ion-route url="/playlist/:playlistId" component="app-songs" />
+          <ion-route url="/song/:songId" component="app-song" />
+          <ion-route url="/playlists/" component="app-playlists" />
         </ion-router>
         <ion-split-pane disabled={!this.isAuthenticated}>
           <ion-menu side="end" menuId="first">
@@ -120,7 +120,7 @@ export class AppRoot {
             <ion-content>
               <ion-list>
                 <ion-menu-toggle autoHide={false}>
-                  <ion-item href="/photos">
+                  <ion-item href="/songs">
                     <ion-icon
                       slot="start"
                       color="primary"
@@ -130,7 +130,7 @@ export class AppRoot {
                   </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle autoHide={false}>
-                  <ion-item href="/albums">
+                  <ion-item href="/playlists">
                     <ion-icon slot="start" color="primary" name="albums" />
                     <ion-label>Playlists</ion-label>
                   </ion-item>
