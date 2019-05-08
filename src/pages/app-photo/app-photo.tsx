@@ -6,7 +6,6 @@ import PresentingService from '../../services/presenting-service';
 import AnalyticsService from '../../services/analytics-service';
 
 declare var blockstack;
-// declare var Caman;
 
 @Component({
   tag: 'app-photo',
@@ -108,16 +107,6 @@ export class AppPhoto {
         this.slideCorrection(iteration + 1);
       }, 10);
     }
-    // else {
-    // const photoId = this.photoId;
-    // Caman('#img-' + this.photoId, function() {
-    //   this.greyscale();
-    //   this.render(async () => {
-    //     const result = await PhotosService.updatePhoto(photoId, this.toBase64());
-    //     console.log('Caman result ', result);
-    //   });
-    // });
-    // }
   }
 
   checkKey(event: any): void {

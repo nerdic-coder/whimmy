@@ -1,4 +1,4 @@
-# Whimmy - Your music on your terms!
+# Whimmy - Your music on your own terms!
 
 <p align="center">
   <img src="https://github.com/nerdic-coder/whimmy/blob/master/electron/icons/png/256x256.png?raw=true" width="256" height="256">
