@@ -171,7 +171,7 @@ export class AppSettings {
             <ion-label>Read our source code</ion-label>
           </ion-item>
         </ion-card>
-        <p text-center="true">Whimmy - Version 3.0</p>
+        <p text-center="true">Whimmy - Version 1.0</p>
       </ion-content>
     ];
   }

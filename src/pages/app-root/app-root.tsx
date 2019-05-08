@@ -121,14 +121,18 @@ export class AppRoot {
               <ion-list>
                 <ion-menu-toggle autoHide={false}>
                   <ion-item href="/photos">
-                    <ion-icon slot="start" color="primary" name="photos" />
-                    <ion-label>Photos</ion-label>
+                    <ion-icon
+                      slot="start"
+                      color="primary"
+                      name="musical-note"
+                    />
+                    <ion-label>Songs</ion-label>
                   </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle autoHide={false}>
                   <ion-item href="/albums">
                     <ion-icon slot="start" color="primary" name="albums" />
-                    <ion-label>Albums</ion-label>
+                    <ion-label>Playlists</ion-label>
                   </ion-item>
                 </ion-menu-toggle>
                 <ion-menu-toggle autoHide={false}>
