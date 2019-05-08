@@ -1,11 +1,11 @@
 {
-  "name": "block-photos",
-  "version": "3.0.0",
+  "name": "whimmy",
+  "version": "1.0.0",
   "private": false,
-  "description": "The app for storing your photos privatly in the cloud!",
+  "description": "The app for your music library to live freely",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nerdic-coder/block-photos"
+    "url": "https://github.com/nerdic-coder/whimmy"
   },
   "license": "MIT",
   "author": "Johan Axelsson",
@@ -34,7 +34,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "Block Photos",
+        "name": "Whimmy",
         "icon": "electron/icons/mac/icon",
         "ignore": [
           ".vscode",
@@ -54,8 +54,8 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "block_photos",
-            "iconUrl": "https://raw.githubusercontent.com/nerdic-coder/block-photos/master/electron/icons/mac/icon.ico",
+            "name": "Whimmy",
+            "iconUrl": "https://raw.githubusercontent.com/nerdic-coder/whimmy/master/electron/icons/mac/icon.ico",
             "setupIcon": "electron/icons/mac/icon.ico"
           }
         },
@@ -71,7 +71,7 @@
           "config": {
             "options": {
               "maintainer": "Johan Axelsson",
-              "homepage": "https://block-photos.com/"
+              "homepage": "https://whimmy.com/"
             }
           }
         }
@@ -82,7 +82,7 @@
           "config": {
             "repository": {
               "owner": "nerdic-coder",
-              "name": "block-photos"
+              "name": "whimmy"
             },
             "prerelease": true
           }
@@ -90,14 +90,14 @@
       ],
       "github_repository": {
         "owner": "nerdic-coder",
-        "name": "block-photos"
+        "name": "whimmy"
       }
     }
   },
   "dependencies": {
     "@capacitor/core": "^1.0.0-beta.19",
-    "@ionic/core": "4.3.0",
-    "@sentry/browser": "5.1.0",
+    "@ionic/core": "4.4.0",
+    "@sentry/browser": "5.2.0",
     "blueimp-load-image": "2.21.0",
     "cors": "2.8.5",
     "electron-is-dev": "1.1.0",
@@ -143,7 +143,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "productName": "block-photos",
+  "productName": "whimmy",
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"

@@ -4,7 +4,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 
 let BASE_URL = `file://${__dirname}/app/index.html`;
-let SCHEME = 'blockphotosapp';
+let SCHEME = 'whimmyapp';
 if (isDev) {
   //  BASE_URL = 'http://localhost:9876';
 }

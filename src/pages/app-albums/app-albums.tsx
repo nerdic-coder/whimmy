@@ -264,7 +264,7 @@ export class AppAlbums {
         </ion-refresher>
         {empty && this.albumsLoaded ? (
           <ion-card mode="md" padding text-center>
-            <h2>Welcome to Block Photos albums section.</h2>
+            <h2>Welcome to Whimmy albums section.</h2>
             <h3>
               Use the add button (<ion-icon size="small" name="add-circle" />)
               to create your first album.

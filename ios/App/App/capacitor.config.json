@@ -1,6 +1,6 @@
 {
-  "appId": "com.nerdiccoder.blockphotos",
-  "appName": "Block Photos",
+  "appId": "com.nerdiccoder.whimmy",
+  "appName": "Whimmy",
   "bundledWebRuntime": false,
   "webDir": "www"
 }

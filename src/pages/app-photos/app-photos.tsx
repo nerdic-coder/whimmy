@@ -347,7 +347,7 @@ export class AppPhotos {
             </ion-buttons>
           ) : null}
           <ion-title class="unselectable">
-            {this.album ? this.album.albumName : 'Block Photos'}
+            {this.album ? this.album.albumName : 'Whimmy'}
           </ion-title>
           <ion-buttons slot="end">
             {this.editMode
@@ -403,7 +403,7 @@ export class AppPhotos {
         </ion-refresher>
         {empty && this.listLoaded ? (
           <ion-card padding text-center>
-            {!this.album ? <h2>Welcome to Block Photos.</h2> : null}
+            {!this.album ? <h2>Welcome to Whimmy.</h2> : null}
             <h3>
               Use the upload button (
               <ion-icon size="small" name="cloud-upload" />) to add your first

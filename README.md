@@ -1,27 +1,25 @@
-# Block Photos - Your photo album on the blockchain!
+# Whimmy - Your music on your terms!
 
 <p align="center">
-  <img src="https://github.com/nerdic-coder/block-photos/blob/master/electron/icons/png/256x256.png?raw=true" width="256" height="256">
+  <img src="https://github.com/nerdic-coder/whimmy/blob/master/electron/icons/png/256x256.png?raw=true" width="256" height="256">
 </p>
 
-[![github](https://img.shields.io/github/release/nerdic-coder/block-photos.svg)](https://github.com/nerdic-coder/block-photos/releases/)
-[![github](https://img.shields.io/github/downloads/nerdic-coder/block-photos/total.svg)](https://github.com/nerdic-coder/block-photos/releases/)
-[![github](https://img.shields.io/github/license/nerdic-coder/block-photos.svg)](https://github.com/nerdic-coder/block-photos)
-[![github](https://img.shields.io/github/repo-size/nerdic-coder/block-photos.svg)](https://github.com/nerdic-coder/block-photos)
-[![snyk](https://img.shields.io/snyk/vulnerabilities/github/nerdic-coder/block-photos.svg)](https://github.com/nerdic-coder/block-photos)
-[![CodeFactor](https://www.codefactor.io/repository/github/nerdic-coder/block-photos/badge/master)](https://www.codefactor.io/repository/github/nerdic-coder/block-photos/overview/master)
-[![website-up-down-green-red](https://img.shields.io/website-up-down-green-red/https/app.block-photos.com.svg?label=my-website)](https://app.block-photos.com/)
-[![twitter](https://img.shields.io/twitter/follow/Block_Photos.svg?label=Follow&style=social)](https://twitter.com/Block_Photos)
+[![github](https://img.shields.io/github/release/nerdic-coder/whimmy.svg)](https://github.com/nerdic-coder/whimmy/releases/)
+[![github](https://img.shields.io/github/downloads/nerdic-coder/whimmy/total.svg)](https://github.com/nerdic-coder/whimmy/releases/)
+[![github](https://img.shields.io/github/license/nerdic-coder/whimmy.svg)](https://github.com/nerdic-coder/whimmy)
+[![github](https://img.shields.io/github/repo-size/nerdic-coder/whimmy.svg)](https://github.com/nerdic-coder/whimmy)
+[![snyk](https://img.shields.io/snyk/vulnerabilities/github/nerdic-coder/whimmy.svg)](https://github.com/nerdic-coder/whimmy)
+[![CodeFactor](https://www.codefactor.io/repository/github/nerdic-coder/whimmy/badge/master)](https://www.codefactor.io/repository/github/nerdic-coder/whimmy/overview/master)
+[![website-up-down-green-red](https://img.shields.io/website-up-down-green-red/https/app.whimmy.com.svg?label=my-website)](https://app.whimmy.com/)
+[![twitter](https://img.shields.io/twitter/follow/Whimmy.svg?label=Follow&style=social)](https://twitter.com/Whimmy)
 
 ## Project links
 
-Visit the website here: [block-photos.com](https://block-photos.com/)
+Visit the website here: [whimmy.com](https://whimmy.com/)
 
-Test the web app here: [app.block-photos.com](https://app.block-photos.com/)
+Test the web app here: [app.whimmy.com](https://app.whimmy.com/)
 
-Follow Block Photos on Twitter: [@Block_Photos](https://twitter.com/Block_Photos)
-
-Read my introduction article about this project: [Building a decentralized Photos app on Blockstack with React](https://nerdic-coder.com/2018/06/22/building-a-decentralized-photos-app-on-blockstack-with-react/)
+Follow Whimmy on Twitter: [@Whimmy](https://twitter.com/Whimmy)
 
 ## Donations
 
@@ -36,7 +34,7 @@ If you like this project please donate to preferred cryptocurrency below:
 3JkxUQ763fbf1cYVAitqpWUMeY4QLaBU8M
 
 <p>
-  <img src="https://github.com/nerdic-coder/block-photos/blob/master/resources/btc-qrcode.png?raw=true">
+  <img src="https://github.com/nerdic-coder/whimmy/blob/master/resources/btc-qrcode.png?raw=true">
 </p>
 
 ### Etherium
@@ -44,7 +42,7 @@ If you like this project please donate to preferred cryptocurrency below:
 0x6e54183E7b22dA87fb48e0d79ADaDa4f665A4D5a
 
 <p>
-  <img src="https://github.com/nerdic-coder/block-photos/blob/master/resources/etherium-qrcode.png?raw=true">
+  <img src="https://github.com/nerdic-coder/whimmy/blob/master/resources/etherium-qrcode.png?raw=true">
 </p>
 
 ### XRP
@@ -52,7 +50,7 @@ If you like this project please donate to preferred cryptocurrency below:
 rGaGGSbeF8HmmrLnTg8gaT92Wa77qg3Y8k
 
 <p>
-  <img src="https://github.com/nerdic-coder/block-photos/blob/master/resources/xrp-qrcode.png?raw=true">
+  <img src="https://github.com/nerdic-coder/whimmy/blob/master/resources/xrp-qrcode.png?raw=true">
 </p>
 
 ### IOTA
@@ -60,7 +58,7 @@ rGaGGSbeF8HmmrLnTg8gaT92Wa77qg3Y8k
 HTPB9JVTMCDHEDMCIPOJELELVLNWLGMHVGZJUCKOYNBZGN9EVCDKFEIUJKINPCBWZI9BKAVIHRVRNWPFC9CQXJYQSZ
 
 <p>
-  <img src="https://github.com/nerdic-coder/block-photos/blob/master/resources/iota-qrcode.png?raw=true">
+  <img src="https://github.com/nerdic-coder/whimmy/blob/master/resources/iota-qrcode.png?raw=true">
 </p>
 
 ### NEO
@@ -74,8 +72,8 @@ To test this project do the following...
 Installation:
 
 ```bash
-git clone https://github.com/nerdic-coder/block-photos.git block-photos
-cd block-photos
+git clone https://github.com/nerdic-coder/whimmy.git whimmy
+cd whimmy
 npm install
 ```
 

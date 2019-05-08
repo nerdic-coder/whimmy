@@ -36,7 +36,7 @@ export class AppSettings {
     }
 
     this.present.openLink(
-      'https://github.com/nerdic-coder/block-photos/issues/new',
+      'https://github.com/nerdic-coder/whimmy/issues/new',
       '_blank'
     );
 
@@ -61,10 +61,7 @@ export class AppSettings {
       event.preventDefault();
     }
 
-    this.present.openLink(
-      'https://www.producthunt.com/posts/block-photos',
-      '_blank'
-    );
+    this.present.openLink('https://www.producthunt.com/posts/whimmy', '_blank');
 
     AnalyticsService.logEvent('product-hunt-link');
   }
@@ -74,7 +71,7 @@ export class AppSettings {
       event.preventDefault();
     }
 
-    this.present.openLink('https://twitter.com/Block_Photos', '_blank');
+    this.present.openLink('https://twitter.com/Whimmy', '_blank');
 
     AnalyticsService.logEvent('twitter-link');
   }
@@ -84,10 +81,7 @@ export class AppSettings {
       event.preventDefault();
     }
 
-    this.present.openLink(
-      'https://github.com/nerdic-coder/block-photos',
-      '_blank'
-    );
+    this.present.openLink('https://github.com/nerdic-coder/whimmy', '_blank');
 
     AnalyticsService.logEvent('github-link');
   }
@@ -96,9 +90,7 @@ export class AppSettings {
     if (event) {
       event.preventDefault();
     }
-    this.present.openLink(
-      'mailto:johan@block-photos.com?subject=Block Photos Feedback'
-    );
+    this.present.openLink('mailto:johan@whimmy.com?subject=Whimmy Feedback');
 
     AnalyticsService.logEvent('send-email-link');
   }
@@ -131,7 +123,7 @@ export class AppSettings {
           </ion-item>
           <ion-item>
             <p>
-              Help Block Photos improve the app by automatically share daily
+              Help Whimmy improve the app by automatically share daily
               diagnostic and usage data. None of your photos or personal
               information will be tracked.
             </p>
@@ -149,7 +141,7 @@ export class AppSettings {
 
           <ion-item detail href="#" onClick={event => this.sendEmail(event)}>
             <ion-icon name="mail" slot="start" color="primary" />
-            <ion-label text-wrap>Email johan@block-photos.com</ion-label>
+            <ion-label text-wrap>Email johan@whimmy.com</ion-label>
           </ion-item>
 
           <ion-item detail href="#" onClick={event => this.reportIssue(event)}>
@@ -179,7 +171,7 @@ export class AppSettings {
             <ion-label>Read our source code</ion-label>
           </ion-item>
         </ion-card>
-        <p text-center="true">Block Photos - Version 3.0</p>
+        <p text-center="true">Whimmy - Version 3.0</p>
       </ion-content>
     ];
   }

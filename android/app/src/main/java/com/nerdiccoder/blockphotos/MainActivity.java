@@ -1,4 +1,4 @@
-package com.nerdiccoder.blockphotos;
+package com.nerdiccoder.whimmy;
 
 import android.os.Bundle;
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Block Photos</title>
+    <title>Whimmy</title>
     <!-- <meta
       http-equiv="Content-Security-Policy"
       content="
@@ -10,7 +10,7 @@
     child-src 'self';
     script-src 'self' 'unsafe-inline';
     style-src 'unsafe-inline';
-    connect-src https://block-photos.com/ blockphotosapp:; ws://*"
+    connect-src https://whimmy.com/ whimmyapp:; ws://*"
     /> -->
     <script src="assets/blockstack-19.1.0.min.js"></script>
     <script>
@@ -31,10 +31,10 @@
         var authResponse = getParameterByName('authResponse');
 
         if (authResponse) {
-          window.location = 'blockphotosapp:' + authResponse;
+          window.location = 'whimmyapp:' + authResponse;
 
           setTimeout(function() {
-            window.location = 'https://block-photos.com/';
+            window.location = 'https://whimmy.com/';
           }, 3000);
         }
       }

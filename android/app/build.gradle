@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.nerdiccoder.blockphotos"
+        applicationId "com.nerdiccoder.whimmy"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 6
