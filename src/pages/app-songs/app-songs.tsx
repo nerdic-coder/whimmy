@@ -1,7 +1,7 @@
 import { Component, Prop, State } from '@stencil/core';
 
 import AlbumsService from '../../services/albums-service';
-import PhotosService from '../../services/photos-service';
+import SongsService from '../../services/songs-service';
 import PresentingService from '../../services/presenting-service';
 import UploadService from '../../services/upload-service';
 import AnalyticsService from '../../services/analytics-service';
@@ -24,13 +24,13 @@ export class AppSongs {
   private photosLoaded: number;
   private infiniteScroll: any;
   private refresherScroll: any;
-  private photosListCached: any[] = [];
+  private listCached: any[] = [];
   private modalController: HTMLIonModalControllerElement;
   private appSongElement: HTMLAppSongElement;
   private album: any;
   private router: HTMLIonRouterElement;
 
-  @State() photosList: any[] = [];
+  @State() list: any[] = [];
   @State() refreshPhotos: any = {};
   @State() listLoaded: boolean;
   @State() editMode: boolean;
@@ -80,7 +80,7 @@ export class AppSongs {
     this.infiniteScroll = document.getElementById('infinite-scroll');
     this.refresherScroll = document.getElementById('photos-refresher-scroll');
     this.uploadService.addEventListeners(true);
-    this.loadPhotosList(false);
+    this.loadlist(false);
 
     this.modalController = document.querySelector('ion-modal-controller');
     this.modalController.componentOnReady();
@@ -100,37 +100,31 @@ export class AppSongs {
     if (event && event.detail && event.detail.to === '/photos') {
       this.playlistId = null;
       this.album = null;
-      this.refreshPhotosList();
+      this.refreshlist();
     }
   }
 
-  refreshPhotosList() {
-    this.loadPhotosList(true, true);
+  refreshlist() {
+    this.loadlist(true, true);
   }
 
-  async loadPhotosList(sync?: boolean, skipLoading?: boolean) {
+  async loadlist(sync?: boolean, skipLoading?: boolean) {
     try {
       if (!skipLoading) {
         await this.present.loading('Loading photos...');
       }
 
-      // Get the contents of the file picture-list.json
-      const photosListResponse = await PhotosService.getPhotosList(
-        sync,
-        this.playlistId
-      );
-      this.photosListCached = photosListResponse.photosList;
+      // Get the contents of the file music-library.json
+      const listResponse = await SongsService.getList(sync, this.playlistId);
+      this.listCached = listResponse.list;
       if (!skipLoading) {
         await this.present.dismissLoading();
       }
 
-      this.loadPhotosRange();
+      this.getsRange();
 
-      if (
-        photosListResponse.errorsList &&
-        photosListResponse.errorsList.length > 0
-      ) {
-        for (const error of photosListResponse.errorsList) {
+      if (listResponse.errorsList && listResponse.errorsList.length > 0) {
+        for (const error of listResponse.errorsList) {
           if (error.errorCode === 'err_cache') {
             this.present.toast('Failed to load cached list. Please try again!');
           } else if (error.errorCode) {
@@ -149,55 +143,37 @@ export class AppSongs {
     }
   }
 
-  loadPhotosRange(event?: any) {
+  getsRange(event?: any) {
     setTimeout(() => {
       if (event) {
         this.infiniteScroll.complete();
       }
       this.refresherScroll.complete();
       const photosToLoad = this.photosLoaded + 18;
-      if (photosToLoad >= this.photosListCached.length) {
+      if (photosToLoad >= this.listCached.length) {
         // this.refresherScroll.disabled = false;
         // this.editMode = false;
-        this.photosList = this.photosListCached;
+        this.list = this.listCached;
         this.listLoaded = true;
         this.infiniteScroll.disabled = true;
       } else {
-        const photosList = this.photosListCached.slice(0, photosToLoad);
+        const list = this.listCached.slice(0, photosToLoad);
         // this.editMode = false;
-        this.photosList = photosList;
+        this.list = list;
         this.listLoaded = true;
         this.photosLoaded = photosToLoad;
       }
     }, 500);
   }
 
-  async rotatePhotos(): Promise<void> {
-    this.refreshPhotos = {};
-    for (const photoId of this.checkedItems) {
-      const result = await PhotosService.rotatePhoto(photoId);
-      if (!result) {
-        await this.present.dismissLoading();
-        const metadata = await PhotosService.getPhotoMetaData(photoId);
-        await this.present.toast(
-          'Failed to rotate photo "' + metadata.filename + '".'
-        );
-      } else {
-        this.refreshPhotos = { ...this.refreshPhotos, [photoId]: true };
-      }
-    }
-
-    AnalyticsService.logEvent('photos-list-rotate');
-  }
-
   uploadFilesDoneCallback() {
-    this.loadPhotosList();
+    this.loadlist();
 
     AnalyticsService.logEvent('photos-list-uploaded');
   }
 
   deletePhotoCallback(): void {
-    this.loadPhotosList();
+    this.loadlist();
 
     AnalyticsService.logEvent('photos-list-deleted');
   }
@@ -255,7 +231,7 @@ export class AppSongs {
       this.refreshPhoto(photoId);
     } else {
       setTimeout(() => {
-        this.loadPhotosList(true, true);
+        this.loadlist(true, true);
       }, 1500);
     }
   }
@@ -332,8 +308,8 @@ export class AppSongs {
   render() {
     let rows = [];
     let empty = true;
-    if (this.photosList && this.photosList.length > 0) {
-      rows = this.chunk(this.photosList, 3);
+    if (this.list && this.list.length > 0) {
+      rows = this.chunk(this.list, 3);
       empty = false;
     }
 
@@ -367,15 +343,6 @@ export class AppSongs {
                   <ion-button
                     fill="outline"
                     color="secondary"
-                    onClick={() => this.rotatePhotos()}
-                    disabled={this.checkedItems.length === 0}
-                  >
-                    <ion-label color="light">Rotate</ion-label>
-                    <ion-icon slot="end" color="light" name="sync" />
-                  </ion-button>,
-                  <ion-button
-                    fill="outline"
-                    color="secondary"
                     disabled={this.checkedItems.length === 0}
                     onClick={() =>
                       this.present.deletePhotos(
@@ -401,7 +368,7 @@ export class AppSongs {
                     class="ion-hide-sm-down"
                     fill="outline"
                     color="secondary"
-                    onClick={() => this.loadPhotosList(true)}
+                    onClick={() => this.loadlist(true)}
                   >
                     <ion-label color="light">Refresh</ion-label>
                     <ion-icon slot="end" color="light" name="refresh" />
@@ -436,7 +403,7 @@ export class AppSongs {
         <ion-refresher
           slot="fixed"
           id="photos-refresher-scroll"
-          onIonRefresh={() => this.refreshPhotosList()}
+          onIonRefresh={() => this.refreshlist()}
         >
           <ion-refresher-content />
         </ion-refresher>
@@ -450,8 +417,8 @@ export class AppSongs {
             <ion-grid class="upload-grid">
               <ion-row>
                 <ion-col align-self-center>
-                  {!this.album ? <h2>Welcome to Block Photos.</h2> : null}
-                  <h3>Click here to upload your first photo.</h3>
+                  {!this.album ? <h2>Welcome to Whimmy.</h2> : null}
+                  <h3>Click here to upload your first song.</h3>
                   <ion-icon
                     class="cloud-icon"
                     size="large"
@@ -562,7 +529,7 @@ export class AppSongs {
         <ion-infinite-scroll
           threshold="100px"
           id="infinite-scroll"
-          onIonInfinite={event => this.loadPhotosRange(event)}
+          onIonInfinite={event => this.getsRange(event)}
         >
           <ion-infinite-scroll-content
             loading-spinner="bubbles"

@@ -1,6 +1,6 @@
 import loadImage from 'blueimp-load-image';
 
-import PhotosService from './photos-service';
+import SongsService from './songs-service';
 import PresentingService from './presenting-service';
 
 export default class UploadService {
@@ -9,15 +9,15 @@ export default class UploadService {
   private callback: any;
   private dropEventBinding: any;
   private handleFileSelectEventBinding: any;
-  private albumId: string;
+  private playlistId: string;
 
-  constructor(callback: any, albumId?: string) {
+  constructor(callback: any, playlistId?: string) {
     this.present = new PresentingService();
     this.callback = callback;
     this.dropEventBinding = this.dropEvent.bind(this);
     this.handleFileSelectEventBinding = this.handleFileSelectEvent.bind(this);
     this.root = document.getElementById('photos-list');
-    this.albumId = albumId;
+    this.playlistId = playlistId;
   }
 
   addEventListeners(fileDialog: boolean): void {
@@ -122,7 +122,7 @@ export default class UploadService {
                     filename: loadedFile.name,
                     stats: loadedFile
                   };
-                  await this.uploadPhoto(metadata, event.target.result);
+                  await this.upload(metadata, event.target.result);
                   if (loadedList[currentIndex + 1]) {
                     this.processUpload(loadedList, currentIndex + 1);
                   } else {
@@ -180,12 +180,12 @@ export default class UploadService {
     }
   }
 
-  async uploadPhoto(metadata: any, data: any): Promise<void> {
+  async upload(metadata: any, data: any): Promise<void> {
     if (metadata && data) {
-      const response = await PhotosService.uploadPhoto(
+      const response = await SongsService.upload(
         metadata,
         data,
-        this.albumId
+        this.playlistId
       );
       if (response.errorsList && response.errorsList.length > 0) {
         for (const error of response.errorsList) {

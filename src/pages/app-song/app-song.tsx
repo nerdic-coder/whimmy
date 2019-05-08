@@ -1,13 +1,11 @@
 import { Component, Prop, State } from '@stencil/core';
 import loadImage from 'blueimp-load-image';
 
-import PhotosService from '../../services/photos-service';
+import SongsService from '../../services/songs-service';
 import PresentingService from '../../services/presenting-service';
 import AnalyticsService from '../../services/analytics-service';
-import { PhotoType } from '../../models/photo-type';
 
 declare var blockstack;
-// declare var Caman;
 
 @Component({
   tag: 'app-song',
@@ -20,7 +18,6 @@ export class AppSong {
   private firstSlide = true;
   private slideToOne = false;
   private keydownPressedListener: any;
-  private photoType: PhotoType = PhotoType.Viewer;
 
   @Prop({ mutable: true }) photoId: string;
   @Prop() albumId: string;
@@ -110,16 +107,6 @@ export class AppSong {
         this.slideCorrection(iteration + 1);
       }, 10);
     }
-    // else {
-    // const photoId = this.photoId;
-    // Caman('#img-' + this.photoId, function() {
-    //   this.greyscale();
-    //   this.render(async () => {
-    //     const result = await PhotosService.updatePhoto(photoId, this.toBase64());
-    //     console.log('Caman result ', result);
-    //   });
-    // });
-    // }
   }
 
   checkKey(event: any): void {
@@ -136,7 +123,7 @@ export class AppSong {
 
   async getPhoto(photoId: string, index: number): Promise<void> {
     let rotation = 1;
-    const metadata: PhotoMetadata = await PhotosService.getPhotoMetaData(
+    const metadata: PhotoMetadata = await SongsService.getPhotoMetaData(
       photoId
     );
 
@@ -185,7 +172,7 @@ export class AppSong {
         orientation: metadata.stats.exifdata.tags.Orientation
       };
       loadImage(
-        await PhotosService.loadPhoto(metadata, this.photoType),
+        await SongsService.get(metadata),
         processedPhoto => {
           this.handleProcessedPhoto(processedPhoto, index, photoId);
         },
@@ -197,7 +184,7 @@ export class AppSong {
           {
             photoId,
             isLoaded: true,
-            source: await PhotosService.loadPhoto(metadata, this.photoType)
+            source: await SongsService.get(metadata)
           },
           ...this.photos
         ];
@@ -208,13 +195,13 @@ export class AppSong {
           {
             photoId,
             isLoaded: true,
-            source: await PhotosService.loadPhoto(metadata, this.photoType)
+            source: await SongsService.get(metadata)
           }
         ];
       } else {
         this.photos[
           this.getPhotoIndex(photoId)
-        ].source = await PhotosService.loadPhoto(metadata, this.photoType);
+        ].source = await SongsService.get(metadata);
         this.photos[this.getPhotoIndex(photoId)].isLoaded = true;
         this.garbage += 1;
       }
@@ -284,7 +271,7 @@ export class AppSong {
 
   async setNextAndPreviousPhoto(photoId: string): Promise<void> {
     if (photoId && photoId !== null) {
-      const nextAndPreviousPhoto = await PhotosService.getNextAndPreviousPhoto(
+      const nextAndPreviousPhoto = await SongsService.getNextAndPreviousPhoto(
         photoId,
         this.albumId
       );
@@ -339,28 +326,6 @@ export class AppSong {
     }
 
     return false;
-  }
-
-  async rotatePhoto(): Promise<void> {
-    await this.present.loading('Rotating photo...');
-    const result = await PhotosService.rotatePhoto(this.photoId);
-    if (!result) {
-      await this.present.dismissLoading();
-      const metadata = await PhotosService.getPhotoMetaData(this.photoId);
-      await this.present.toast(
-        'Failed to rotate photo "' + metadata.filename + '".'
-      );
-    } else {
-      this.getPhoto(this.photoId, 1);
-
-      if (this.updateCallback && typeof this.updateCallback === 'function') {
-        // execute the callback, passing parameters as necessary
-        this.updateCallback(this.photoId);
-      }
-
-      this.present.dismissLoading();
-    }
-    AnalyticsService.logEvent('photo-page-rotate');
   }
 
   async deletePhotoCallback() {
@@ -456,17 +421,6 @@ export class AppSong {
               <ion-label color="light">Albums</ion-label>
               <ion-icon slot="end" color="light" name="add-circle" />
             </ion-button>
-            <ion-button
-              fill="outline"
-              color="secondary"
-              onClick={() => this.rotatePhoto()}
-            >
-              <ion-label color="light">Rotate</ion-label>
-              <ion-icon slot="end" color="light" name="sync" />
-            </ion-button>
-            {/* <ion-button onClick={() => this.presentFilterSelector(event)}>
-              <ion-icon color="light" name="color-wand" />
-            </ion-button> */}
             <ion-button
               fill="outline"
               color="secondary"

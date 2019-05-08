@@ -1,4 +1,4 @@
-import PhotosService from './photos-service';
+import SongsService from './songs-service';
 import isElectron from 'is-electron';
 
 export default class PresentingService {
@@ -64,7 +64,7 @@ export default class PresentingService {
             this.loading('Deleting photos...');
           }
 
-          PhotosService.deletePhotos(ids).then(async result => {
+          SongsService.deletePhotos(ids).then(async result => {
             await this.dismissLoading();
             if (result === true) {
               callback();
@@ -86,19 +86,17 @@ export default class PresentingService {
         icon: 'remove-circle',
         handler: () => {
           this.loading('Removing photos...');
-          PhotosService.removePhotosFromList(ids, albumId).then(
-            async result => {
-              await this.dismissLoading();
-              if (result === true) {
-                callback();
-              } else {
-                this.errorAlert(
-                  'Removal failed',
-                  'The removal of some photos failed. Please try again in a few minutes!'
-                );
-              }
+          SongsService.removePhotosFromList(ids, albumId).then(async result => {
+            await this.dismissLoading();
+            if (result === true) {
+              callback();
+            } else {
+              this.errorAlert(
+                'Removal failed',
+                'The removal of some photos failed. Please try again in a few minutes!'
+              );
             }
-          );
+          });
         }
       });
     }

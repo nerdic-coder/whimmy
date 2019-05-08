@@ -2,7 +2,7 @@ import { Component, Prop, State } from '@stencil/core';
 
 import AlbumsService from '../services/albums-service';
 import PresentingService from '../services/presenting-service';
-import PhotosService from '../services/photos-service';
+import SongsService from '../services/songs-service';
 
 @Component({
   tag: 'select-album'
@@ -57,7 +57,7 @@ export class SelectAlbum {
   async addPhotosToAlbum(event: any, album: any) {
     event.preventDefault();
     await this.closePopover();
-    const result: boolean = await PhotosService.addPhotosToAlbum(
+    const result: boolean = await SongsService.addToPlaylist(
       album.albumId,
       this.selectedPhotos
     );
