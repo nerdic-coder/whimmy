@@ -48,9 +48,7 @@ export class BlockImg {
       return;
     }
 
-    const metadata: PhotoMetadata = await SongsService.getPhotoMetaData(
-      photoId
-    );
+    const metadata: PhotoMetadata = await SongsService.getMetadata(photoId);
     const base64 = await SongsService.get(metadata);
 
     let rotation = 1;

@@ -1,6 +1,6 @@
 import { Component, Prop, State } from '@stencil/core';
 
-import AlbumsService from '../../services/albums-service';
+import PlaylistsService from '../../services/playlists-service';
 import SongsService from '../../services/songs-service';
 import PresentingService from '../../services/presenting-service';
 import UploadService from '../../services/upload-service';
@@ -52,7 +52,7 @@ export class AppSongs {
 
     if (this.playlistId) {
       // Load album list
-      this.album = await AlbumsService.getAlbumMetaData(this.playlistId);
+      this.album = await PlaylistsService.getMetadata(this.playlistId);
     }
   }
 

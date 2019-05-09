@@ -64,7 +64,7 @@ export default class PresentingService {
             this.loading('Deleting photos...');
           }
 
-          SongsService.deletePhotos(ids).then(async result => {
+          SongsService.deleteItems(ids).then(async result => {
             await this.dismissLoading();
             if (result === true) {
               callback();
@@ -86,7 +86,7 @@ export default class PresentingService {
         icon: 'remove-circle',
         handler: () => {
           this.loading('Removing photos...');
-          SongsService.removePhotosFromList(ids, albumId).then(async result => {
+          SongsService.removeFromList(ids, albumId).then(async result => {
             await this.dismissLoading();
             if (result === true) {
               callback();

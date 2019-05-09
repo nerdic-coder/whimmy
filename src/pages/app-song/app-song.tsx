@@ -50,9 +50,9 @@ export class AppSong {
       return;
     }
 
-    // Go to photos list if photo id is missing
+    // Go to songs list if song id is missing
     if (!this.photoId) {
-      router.push('/photos', 'root');
+      router.push('/songs', 'root');
       return;
     }
 
@@ -123,9 +123,7 @@ export class AppSong {
 
   async getPhoto(photoId: string, index: number): Promise<void> {
     let rotation = 1;
-    const metadata: PhotoMetadata = await SongsService.getPhotoMetaData(
-      photoId
-    );
+    const metadata: PhotoMetadata = await SongsService.getMetadata(photoId);
 
     if (
       metadata &&
@@ -271,7 +269,7 @@ export class AppSong {
 
   async setNextAndPreviousPhoto(photoId: string): Promise<void> {
     if (photoId && photoId !== null) {
-      const nextAndPreviousPhoto = await SongsService.getNextAndPreviousPhoto(
+      const nextAndPreviousPhoto = await SongsService.getNextAndPreviousItem(
         photoId,
         this.albumId
       );

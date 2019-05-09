@@ -1,5 +1,5 @@
 import StorageService from './storage-service';
-import AlbumsService from './albums-service';
+import PlaylistsService from './playlists-service';
 
 export default class SongsService {
   static async getList(
@@ -77,7 +77,7 @@ export default class SongsService {
 
       list.unshift(listdata);
       if (playlistId) {
-        await AlbumsService.updateAlbumThumbnail(playlistId, metadata.id);
+        await PlaylistsService.updateThumbnail(playlistId, metadata.id);
 
         playlist.unshift(listdata);
       }
@@ -124,7 +124,7 @@ export default class SongsService {
       }
     }
     for (const id of ids) {
-      const metadata = await SongsService.getPhotoMetaData(id);
+      const metadata = await SongsService.getMetadata(id);
       if (metadata && !metadata.albums) {
         metadata.albums = [];
       }
@@ -134,26 +134,26 @@ export default class SongsService {
           filename: metadata.filename
         });
         metadata.albums.push(playlistId);
-        await SongsService.setPhotoMetaData(id, metadata);
+        await SongsService.setMetadata(id, metadata);
       }
     }
 
     await StorageService.setItem(playlistId, JSON.stringify(playlist));
 
-    await AlbumsService.updateAlbumThumbnail(playlistId, ids[0]);
+    await PlaylistsService.updateThumbnail(playlistId, ids[0]);
 
     return true;
   }
 
-  static async deletePhoto(photoId: string): Promise<boolean> {
+  static async delete(id: string): Promise<boolean> {
     let returnState = false;
-    const metadata = await SongsService.getPhotoMetaData(photoId);
+    const metadata = await SongsService.getMetadata(id);
     try {
       // Delete photo, compressed photos and the photo metadata
-      await StorageService.deleteItem(photoId);
-      await StorageService.deleteItem(photoId + '-meta');
-      await StorageService.deleteItem(photoId + '-thumbnail');
-      await StorageService.deleteItem(photoId + '-viewer');
+      await StorageService.deleteItem(id);
+      await StorageService.deleteItem(id + '-meta');
+      await StorageService.deleteItem(id + '-thumbnail');
+      await StorageService.deleteItem(id + '-viewer');
       returnState = true;
     } catch (error) {
       returnState = false;
@@ -163,13 +163,13 @@ export default class SongsService {
       return false;
     }
 
-    // Remove photo from main list
-    returnState = await SongsService.removePhotoFromList(photoId);
+    // Remove item from main list
+    returnState = await SongsService.removeItemFromList(id);
 
-    // Remove photo from albums
+    // Remove item from playlists
     if (metadata.albums && metadata.albums.length > 0) {
       for (const albumId of metadata.albums) {
-        returnState = await SongsService.removePhotoFromList(photoId, albumId);
+        returnState = await SongsService.removeItemFromList(id, albumId);
         if (!returnState) {
           return false;
         }
@@ -178,46 +178,44 @@ export default class SongsService {
     return returnState;
   }
 
-  static async removePhotoFromList(
-    photoId: string,
-    albumId?: string
+  static async removeItemFromList(
+    id: string,
+    playlistId?: string
   ): Promise<boolean> {
-    const listResponse = await SongsService.getList(true, albumId);
+    const listResponse = await SongsService.getList(true, playlistId);
     const list = listResponse.list;
-    const listName = albumId ? albumId : 'music-library.json';
+    const listName = playlistId ? playlistId : 'music-library.json';
 
     let index = 0;
-    for (const photo of list) {
-      if (photoId === photo.id) {
+    for (const item of list) {
+      if (id === item.id) {
         list.splice(index, 1);
         await StorageService.setItem(listName, JSON.stringify(list));
 
         if (list.length > 0) {
-          await AlbumsService.updateAlbumThumbnail(albumId, list[0].id);
+          await PlaylistsService.updateThumbnail(playlistId, list[0].id);
         }
         break;
       }
       index++;
     }
 
-    const metadata: PhotoMetadata = await SongsService.getPhotoMetaData(
-      photoId
-    );
+    const metadata: PhotoMetadata = await SongsService.getMetadata(id);
     if (metadata) {
-      metadata.albums = metadata.albums.includes(albumId)
-        ? metadata.albums.filter(album => album !== albumId)
+      metadata.albums = metadata.albums.includes(playlistId)
+        ? metadata.albums.filter(album => album !== playlistId)
         : metadata.albums;
-      await SongsService.setPhotoMetaData(photoId, metadata);
+      await SongsService.setMetadata(id, metadata);
     }
 
     return true;
   }
 
-  static async deletePhotos(photoIds: string[]): Promise<boolean> {
+  static async deleteItems(ids: string[]): Promise<boolean> {
     let returnState = false;
     try {
-      for (const photoId of photoIds) {
-        const result = await SongsService.deletePhoto(photoId);
+      for (const id of ids) {
+        const result = await SongsService.delete(id);
         if (!result) {
           throw result;
         }
@@ -231,14 +229,14 @@ export default class SongsService {
     return returnState;
   }
 
-  static async removePhotosFromList(
-    photoIds: string[],
-    albumId?: string
+  static async removeFromList(
+    ids: string[],
+    playlistId?: string
   ): Promise<boolean> {
     let returnState = false;
     try {
-      for (const photoId of photoIds) {
-        const result = await SongsService.removePhotoFromList(photoId, albumId);
+      for (const id of ids) {
+        const result = await SongsService.removeItemFromList(id, playlistId);
         if (!result) {
           throw result;
         }
@@ -251,18 +249,18 @@ export default class SongsService {
     return returnState;
   }
 
-  static async getNextAndPreviousPhoto(
+  static async getNextAndPreviousItem(
     id: string,
-    albumId?: string
+    playlistId?: string
   ): Promise<any> {
     const response = { previousId: null, nextId: null };
-    const listResponse = await SongsService.getList(true, albumId);
+    const listResponse = await SongsService.getList(true, playlistId);
     const list = listResponse.list;
 
     let index = 0;
-    for (const photo of list) {
+    for (const item of list) {
       // Current photo
-      if (photo.id === id) {
+      if (item.id === id) {
         if (list[index - 1]) {
           response.previousId = list[index - 1].id;
         }
@@ -277,44 +275,39 @@ export default class SongsService {
     return response;
   }
 
-  static async getPhotoMetaData(photoId: string): Promise<PhotoMetadata> {
-    const cachedPhotoMetaData: string = await StorageService.getItem(
-      photoId + '-meta'
-    );
+  static async getMetadata(id: string): Promise<PhotoMetadata> {
+    const metadata: string = await StorageService.getItem(id + '-meta');
 
-    if (!cachedPhotoMetaData) {
+    if (!metadata) {
       const listResponse = await SongsService.getList();
       const list = listResponse.list;
-      let photoMetaData: PhotoMetadata;
+      let newMetadata: PhotoMetadata;
       let index = 0;
-      for (const photo of list) {
-        // Current photo
-        if (photo.id === photoId) {
-          photoMetaData = list[index];
-          SongsService.setPhotoMetaData(photoId, cachedPhotoMetaData);
+      for (const item of list) {
+        // Current item
+        if (item.id === id) {
+          newMetadata = list[index];
+          SongsService.setMetadata(id, metadata);
           break;
         }
         index++;
       }
-      return photoMetaData;
-    } else if (cachedPhotoMetaData) {
-      return JSON.parse(cachedPhotoMetaData);
+      return newMetadata;
+    } else if (metadata) {
+      return JSON.parse(metadata);
     } else {
       return null;
     }
   }
 
-  static async setPhotoMetaData(
-    photoId: string,
-    metadata: any
-  ): Promise<boolean> {
+  static async setMetadata(id: string, metadata: any): Promise<boolean> {
     // id and metadata is required
-    if (!photoId || !metadata) {
+    if (!id || !metadata) {
       return false;
     }
 
     // Save photos metadata to a file
-    await StorageService.setItem(photoId + '-meta', JSON.stringify(metadata));
+    await StorageService.setItem(id + '-meta', JSON.stringify(metadata));
 
     return true;
   }

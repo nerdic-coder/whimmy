@@ -1,6 +1,6 @@
 import { Component, State } from '@stencil/core';
 
-import AlbumsService from '../../services/albums-service';
+import PlaylistsService from '../../services/playlists-service';
 import AnalyticsService from '../../services/analytics-service';
 import PresentingService from '../../services/presenting-service';
 
@@ -51,7 +51,7 @@ export class AppPlaylists {
       if (loader) {
         await this.present.loading('Loading albums...');
       }
-      const albumsResponse = await AlbumsService.getAlbums(sync);
+      const albumsResponse = await PlaylistsService.getList(sync);
       this.albums = albumsResponse.albums;
 
       if (loader) {
@@ -109,10 +109,10 @@ export class AppPlaylists {
           cssClass: 'primary',
           handler: async album => {
             try {
-              const albumsResponse = await AlbumsService.createAlbum(
+              const albumsResponse = await PlaylistsService.create(
                 album.albumName
               );
-              this.albums = albumsResponse.albums;
+              this.albums = albumsResponse.list;
               this.albumsLoaded = true;
 
               this.handleAlbumErrors(albumsResponse);
@@ -141,7 +141,7 @@ export class AppPlaylists {
   async updateAlbumName(event: any, albumId: string, albumName: string) {
     if (albumName !== event.target.value) {
       try {
-        const albumsResponse = await AlbumsService.updateAlbumName(
+        const albumsResponse = await PlaylistsService.updateName(
           albumId,
           event.target.value
         );
@@ -188,7 +188,7 @@ export class AppPlaylists {
   async deleteCallback(albumId: string) {
     try {
       this.present.loading('Deleting album...');
-      const albumsResponse = await AlbumsService.deleteAlbum(albumId);
+      const albumsResponse = await PlaylistsService.delete(albumId);
       await this.present.dismissLoading();
 
       if (albumsResponse) {

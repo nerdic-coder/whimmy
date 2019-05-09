@@ -31,14 +31,14 @@ export class AppSignin {
     const userSession = new blockstack.UserSession();
     if (userSession.isUserSignedIn()) {
       this.hideSplash();
-      router.push('/photos', 'root');
+      router.push('/songs', 'root');
       return;
     } else if (userSession.isSignInPending() && !userSession.isUserSignedIn()) {
       try {
         await userSession.handlePendingSignIn();
         this.hideSplash();
 
-        router.push('/photos', 'root');
+        router.push('/songs', 'root');
         AnalyticsService.logEvent('login');
         return;
       } catch (error) {

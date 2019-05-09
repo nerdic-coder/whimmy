@@ -1,6 +1,6 @@
 import { Component, Prop, State } from '@stencil/core';
 
-import AlbumsService from '../services/albums-service';
+import PlaylistsService from '../services/playlists-service';
 import PresentingService from '../services/presenting-service';
 import SongsService from '../services/songs-service';
 
@@ -29,7 +29,7 @@ export class SelectAlbum {
 
   async loadAlbums(sync?: boolean) {
     try {
-      const albumsResponse = await AlbumsService.getAlbums(sync);
+      const albumsResponse = await PlaylistsService.getList(sync);
       this.albums = albumsResponse.albums;
 
       this.isLoaded = true;
